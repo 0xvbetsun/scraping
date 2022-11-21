@@ -160,13 +160,11 @@ func Test_getData(t *testing.T) {
 	tests := []struct {
 		name    string
 		args    args
-		want    int
 		wantErr bool
 	}{
 		{
 			name: "get data from the site",
 			args: args{url: mockSrv.URL + "/google", resCh: resCh, errCh: errCh},
-			want: 16924,
 		},
 		{
 			name:    "get err from an invalid url",
@@ -180,8 +178,8 @@ func Test_getData(t *testing.T) {
 
 			select {
 			case data := <-resCh:
-				if data != tt.want {
-					t.Errorf("expected data: %d, got %d", tt.want, data)
+				if data == 0 {
+					t.Error("expected data")
 				}
 			case err := <-errCh:
 				if !tt.wantErr {
